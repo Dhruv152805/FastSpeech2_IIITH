@@ -1,0 +1,44 @@
+# ==============================================================================
+# .gitignore for FastSpeech 2 Bilingual TTS (Indian English & Telugu)
+# ==============================================================================
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+venv/
+venv_fs2/
+.env/
+
+# Temporary files & logs
+*.tmp
+*.log
+.DS_Store
+Thumbs.db
+*.cache
+*.cache/
+audit_summary.json
+phase3_phase4_audit.json
+
+# Scratch and backups
+scratch/
+backup_previous_run/
+
+# IDE & Editor files
+.vscode/
+.idea/
+
+# Large raw and preprocessed datasets (~3.8 GB)
+# Audio and features are generated via scripts/dataset_preparation/
+data/
+
+# Intermediate training checkpoints (~418 MB each)
+# Best model checkpoints (best_model.pth.tar) are preserved for evaluation.
+# Note: GitHub requires Git LFS for files >100 MB.
+English/checkpoints/checkpoint_*.pth.tar
+English/checkpoints/latest_model.pth.tar
+Telugu/checkpoints/checkpoint_*.pth.tar
+Telugu/checkpoints/latest_model.pth.tar
+
