@@ -246,80 +246,40 @@ Thirty plots (10 utterances $\times$ 3 variance attributes: Duration, Pitch, Ene
 ## 11. Repository Structure
 
 ```
-fastspeech2-iiith/
+project/
 ├── English/
-│   ├── config.yaml                     # Acoustic hyperparameters & training configs (115 speakers)
-│   ├── preprocess.py                   # Svarah feature extraction & MMS Forced Aligner
-│   ├── train.py                        # English FastSpeech 2 training with AMP FP16
-│   ├── inference.py                    # Inference script supporting speaker selection & checkpoints
-│   ├── speakers.json                   # Svarah 115-speaker ID mapping
+│   ├── train.py
+│   ├── preprocess.py
+│   ├── inference.py
+│   ├── config.yaml
 │   └── checkpoints/
-│       ├── best_model.pth.tar             # Best checkpoint (Step 2,750, Val Loss: 2.6492)
-│       ├── checkpoint_500.pth.tar ... checkpoint_3000.pth.tar # Periodic checkpoints
-│       ├── latest_model.pth.tar           # Final Step 3,000 model
-│       └── speakers.json                  # Preserved speaker map
 ├── Telugu/
-│   ├── config.yaml                     # Telugu acoustic hyperparameters & configs (2 speakers)
-│   ├── preprocess.py                   # IndicTTS feature extraction & MMS Forced Aligner
-│   ├── train.py                        # Telugu FastSpeech 2 training with AMP FP16
-│   ├── inference.py                    # Telugu inference script supporting checkpoints
-│   ├── speakers.json                   # IndicTTS 2-speaker ID mapping (Female & Male)
+│   ├── train.py
+│   ├── preprocess.py
+│   ├── inference.py
+│   ├── config.yaml
 │   └── checkpoints/
-│       ├── best_model.pth.tar             # Best checkpoint (Step 3,000, Val Loss: 2.3660)
-│       ├── checkpoint_500.pth.tar ... checkpoint_3000.pth.tar # Periodic checkpoints
-│       ├── latest_model.pth.tar           # Final Step 3,000 model
-│       └── speakers.json                  # Preserved speaker map
 ├── Results/
 │   ├── English/
-│   │   ├── test_generated_audios/      # E1.wav, E2a.wav, E2b.wav, E3.wav, E4.wav (22,050 Hz)
-│   │   ├── variance_adaptor_plots/     # 15 plots (duration/, pitch/, energy/)
-│   │   ├── training_loss.png           # Training loss curve across 3,000 steps
-│   │   ├── validation_loss.png         # Validation loss curve across 3,000 steps
-│   │   ├── loss_history.json           # Step-by-step train & val loss records
-│   │   └── test_predictions.json       # Predicted sequence, duration, pitch, and energy data
+│   │   ├── training_loss.png
+│   │   ├── validation_loss.png
+│   │   ├── test_generated_audios/
+│   │   └── variance_adaptor_plots/
+│   │       ├── duration/
+│   │       ├── pitch/
+│   │       └── energy/
 │   └── Telugu/
-│       ├── test_generated_audios/      # T1.wav, T2a.wav, T2b.wav, T3.wav, T4.wav (22,050 Hz)
-│       ├── variance_adaptor_plots/     # 15 plots (duration/, pitch/, energy/)
-│       ├── training_loss.png           # Training loss curve across 3,000 steps
-│       ├── validation_loss.png         # Validation loss curve across 3,000 steps
-│       ├── loss_history.json           # Step-by-step train & val loss records
-│       └── test_predictions.json       # Predicted sequence, duration, pitch, and energy data
+│       ├── training_loss.png
+│       ├── validation_loss.png
+│       ├── test_generated_audios/
+│       └── variance_adaptor_plots/
+│           ├── duration/
+│           ├── pitch/
+│           └── energy/
 ├── Report/
-│   ├── Technical_Report.pdf            # Comprehensive publication-grade technical report
-│   ├── english_multispeaker_training_report.md # Multi-speaker retraining documentation
-│   └── english_audio_diagnosis.md      # Diagnostic root-cause investigation
-├── scripts/
-│   ├── dataset_preparation/            # Corpus acquisition, parsing, and subset extraction
-│   │   ├── download_datasets.py
-│   │   ├── extract_svarah_subset.py
-│   │   ├── extract_telugu_subset.py
-│   │   ├── index_svarah.py
-│   │   ├── index_telugu.py
-│   │   └── inspect_datasets.py
-│   ├── alignment_preprocessing/        # Forced alignment, G2P, and symbol validations
-│   │   ├── test_english_alignment_5samples.py
-│   │   ├── test_telugu_alignment_5samples.py
-│   │   ├── test_cleaners.py
-│   │   ├── test_symbols.py
-│   │   └── test_telugu_g2p.py
-│   ├── training_inference/             # Diagnostic investigations & acoustic inspectors
-│   │   ├── diagnose_english.py
-│   │   └── inspect_e1_t1.py
-│   ├── plotting/                       # Visualization generators
-│   │   └── plot_variance_adaptor.py    # Generates all 30 duration, pitch, and energy plots
-│   ├── verification/                   # Environment and submission audits
-│   │   ├── verify_env.py
-│   │   ├── verify_phase1.py
-│   │   ├── verify_phase2.py
-│   │   ├── verify_phase3_phase4.py
-│   │   └── audit_submission.py
-│   └── README.md                       # Documentation for modular scripts
-├── reference_fastspeech2/              # Core FastSpeech 2 model, HiFi-GAN vocoder, and text tools
-├── requirements.txt                    # Pinned Python package dependencies
-├── .gitignore                          # Configured ignore patterns for reproducible deployment
-├── build_technical_report.py           # Script to compile Technical_Report.pdf via ReportLab
-├── plot_variance_adaptor.py            # Convenience root forwarder for 30 plots
-└── README.md                           # This documentation
+│   └── Technical_Report.pdf
+├── README.md
+└── requirements.txt
 ```
 
 ---
@@ -350,23 +310,10 @@ To synthesize all test utterances using the best checkpoints:
 .\venv_fs2\Scripts\python.exe Telugu/inference.py --ckpt best_model.pth.tar --sentence all
 ```
 
-### Step 3: Re-generating Variance Adaptor Visualizations
-To generate all 30 duration, pitch, and energy plots:
-```powershell
-.\venv_fs2\Scripts\python.exe scripts/plotting/plot_variance_adaptor.py
-```
-
-### Step 4: Re-compiling the Technical Report
-To re-generate `Report/Technical_Report.pdf`:
-```powershell
-.\venv_fs2\Scripts\python.exe build_technical_report.py
-```
-
-### Step 5: Verification & Audit
-Run the automated test suite to verify all artifacts across all phases:
-```powershell
-.\venv_fs2\Scripts\python.exe scripts/verification/audit_submission.py
-```
+### Step 3: Inspecting Generated Audio & Visualizations
+- Synthesized waveforms are saved under `Results/{English,Telugu}/test_generated_audios/`.
+- Predicted duration, pitch, and energy plots are saved under `Results/{English,Telugu}/variance_adaptor_plots/`.
+- Detailed technical analysis and comparative evaluation are documented in `Report/Technical_Report.pdf`.
 
 ---
 *Developed for IIIT Hyderabad Speech Processing / Deep Learning Assignment.*

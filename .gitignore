@@ -31,14 +31,25 @@ backup_previous_run/
 .idea/
 
 # Large raw and preprocessed datasets (~3.8 GB)
-# Audio and features are generated via scripts/dataset_preparation/
 data/
 
 # Intermediate training checkpoints (~418 MB each)
-# Best model checkpoints (best_model.pth.tar) are preserved for evaluation.
-# Note: GitHub requires Git LFS for files >100 MB.
 English/checkpoints/checkpoint_*.pth.tar
 English/checkpoints/latest_model.pth.tar
 Telugu/checkpoints/checkpoint_*.pth.tar
 Telugu/checkpoints/latest_model.pth.tar
 
+# Local utilities and reference implementations excluded from public submission
+reference_fastspeech2/
+scripts/
+build_technical_report.py
+plot_variance_adaptor.py
+FastSpeech2_Assignment.pdf
+English/speakers.json
+Telugu/speakers.json
+Results/English/loss_history.json
+Results/English/test_predictions.json
+Results/Telugu/loss_history.json
+Results/Telugu/test_predictions.json
+Report/english_audio_diagnosis.md
+Report/english_multispeaker_training_report.md
